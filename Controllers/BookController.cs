@@ -57,41 +57,36 @@ namespace MyMvcApp.Controllers
 			_bookContext.SaveChanges();
 			return Ok();
 		}
-
-
-
 		[HttpPut("{id}")]
 		public IActionResult UpdateBook(int id, Book book)
 		{
-Book existingBook = _bookContext.Books?.FirstOrDefault(b => b.Id == id);
-if (existingBook == null)
-{
-    return NotFound();
-}
-
-
-
-
-			existingBook.Title = book.Title;
-			existingBook.Author = book.Author;
-			_bookContext.SaveChanges();
-			return Ok();
-		}
-
-
-
-
-		[HttpDelete("{id}")]
-		public IActionResult DeleteBook(int id)
-		{
-			Book? existingBook = _bookContext.Books.FirstOrDefault(b => b.Id == id);
+			Book? existingBook = _bookContext.Books?.FirstOrDefault(b => b.Id == id);
 			if (existingBook == null)
 			{
 				return NotFound();
 			}
-			_bookContext.Books.Remove(existingBook);
+
+			existingBook.Title = book.Title;
+			existingBook.Author = book.Author;
+
 			_bookContext.SaveChanges();
 			return Ok();
 		}
+
+
+[HttpDelete("{id}")]
+public IActionResult DeleteBook(int id)
+{
+    Book? existingBook = _bookContext.Books?.FirstOrDefault(b => b.Id == id);
+    if (existingBook == null)
+    {
+        return NotFound();
+    }
+    _bookContext.Books?.Remove(existingBook);
+    _bookContext.SaveChanges();
+    return Ok();
+}
+
+
 	}
 }
